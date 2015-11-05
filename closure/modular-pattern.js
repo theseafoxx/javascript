@@ -33,3 +33,26 @@ var Module = (function(){
         }
     };
 })();
+
+// Another example
+// http://benalman.com/news/2010/11/immediately-invoked-function-expression/
+// 
+// Even though parens are not required around this function expression, they 
+// should still be used as a matter of convention to help clarify that the 
+// variable is being set to the function's *result* and not the function itself.
+
+var counter = (function(){
+  var i = 0;
+
+  return {
+    get: function(){
+      return i;
+    },
+    set: function( val ){
+      i = val;
+    },
+    increment: function() {
+      return ++i;
+    }
+  };
+}());
