@@ -10,8 +10,9 @@
  * http://ryanmorr.com/understanding-scope-and-context-in-javascript/
  */
 
-// this in the secound set of parens is passed to the function arguement
-// Module is added to the window object.
+// 'this' in the second set of parens is passed to the function arguement.
+// Module is added to the window object. 'window' is the Global object's delegate (ECMA-262 does
+// not indicate a way to access the Global object directly).
 // foo and bar are private and can only be accessed if methods are added to the window.Module code
 (function(window){
           
