@@ -30,6 +30,16 @@
 
 })(this);
 
+// Or assign an IIFE to a variable
+// In this example the global object has been accessed and assigned to the variable global.
+// Note that the function does not need to be wrapped in parens when it is an expression.
+
+var global = function(){ return this; }();
+var test = 'bank';
+console.log(global.test);
+console.log(window.test);
+console.log(test);
+
 /*
  * IIFE - used to save state
  */
