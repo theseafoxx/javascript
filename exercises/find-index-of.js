@@ -52,6 +52,24 @@ for(var ii = -1; (pos = myString.indexOf("Nano",ii+1)) >= 0; ii = pos){
 console.log(nanoArray);
 nanoArray = nanoArray.splice(); /* empty the nanoArray */
 
+/* String.prototype.charAt() (with the help of String.prototype.substr() */
+/* reason this works:
+ * Loop iterates over the string, when there is a match the length of the searchValue is added to ii minus 1.
+ * Expression statement checks that the current character matches the first character of the searchValue and if the substring 
+ * mathces the searchValue by using substr() to return a substring from the startIndex of ii with the length of the searchValue.
+ * If the searchValue was nana and the search string was "nananaboop" it would only return 1 index for nana @ 0 b/c the
+ * next iteration ii was set to would be 4. So the criteria is important, when the word is found does the search start up after
+ * the last letter or after the first letter of the word.
+ */
+for(var ii = 0; ii < myString.length; ii++){
+  if( myString.charAt(ii) === lookUp.charAt(0) && myString.substr(ii,lookUpLen) === lookUp){
+    nanoArray.push(ii);
+    ii += lookUpLen-1;
+  }
+}
+console.log(nanoArray);
+nanoArray = nanoArray.splice(); /* empty the nanoArray */
+
 /* String.prototype.substring() */
 /* the reason this works:
  * Same as the for loop using substr(), except substring() second parameter needs an index rather than the length
