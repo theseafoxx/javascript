@@ -38,6 +38,20 @@ for(var ii = 0; ii < myString.length; ii++){
 console.log(nanoArray);
 nanoArray = nanoArray.splice(); /* empty the nanoArray */
 
+/* String.prototype.indexOf() */
+/* reason this works:
+ * indexOf() returns -1 if the searchValue is not found, which will make to loop condition false.
+ * str.indexOf(searchValue, fromIndex)
+ * ii is set to the index where the searchValue was found.
+ * indexOf() fromIndex uses ii+1 so that it increments the position to search at, rather than creating an unending loop.
+ * Since pos is the index of the string we are looking for it can be added to the array without an additional evaluation.
+ */
+for(var ii = -1; (pos = myString.indexOf("Nano",ii+1)) >= 0; ii = pos){
+  nanoArray.push(pos);
+}
+console.log(nanoArray);
+nanoArray = nanoArray.splice(); /* empty the nanoArray */
+
 /* String.prototype.substring() */
 /* the reason this works:
  * Same as the for loop using substr(), except substring() second parameter needs an index rather than the length
