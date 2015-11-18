@@ -15,7 +15,14 @@ function hasProperty(obj, property) {
     console.log('The property "' + property + '" does not exist in the object.')
   }
 }
-
+function listProperties(obj) {
+  // this function lists the properties on the object, enumerable or not
+  if(obj == null){ return; } //end recursion
+  
+  console.log(obj.constructor.name + ": " + Object.getOwnPropertyNames(obj));
+  // run the function again, supply the next prototype in the chain
+  hasProperties(Object.getPrototypeOf(obj));
+}
 /*
  * Factory pattern
  * encapsulate the creaton of specific objects with an interface
@@ -41,6 +48,7 @@ console.log(p1 instanceof Person1);
 
 /*
  * Constructor Pattern
+ *
  * create specific type of object - the instance can be identified as a 
  * particular type.
  * differences from Factory Pattern:
@@ -73,6 +81,7 @@ console.log(p2a.sayName == p2b.sayName); //false
 
 /* 
  * Prototype Pattern
+ *
  * assign properties and methods directly to the prototype, these will
  * be shared by all instances.
  * When a property is changed for an instance it will shadow the prototype
@@ -138,6 +147,7 @@ console.log(Object.getPrototypeOf(p4)); //Person4 {name: "Sam", age: 12}
 
 /*
  * Combination Constructor/Prototype Pattern
+ *
  * Best of both patterns, instance properties and prototype methods and shared properties
  */
 
@@ -167,9 +177,10 @@ console.log(p5b.friends);
 
 /*
  * Dynamic Prototype Pattern
+ *
  * The visual seperation between prototype and constructor can be confusing.
  * This pattern seeks to resolve this problem.
- * The object literal cannot be use to set the prototype properties because an instance currently exists
+ * The object literal cannot be used to set the prototype properties because an instance currently exists
  * and this would disconnect the instance from the new prototype.
  */
 
@@ -191,3 +202,25 @@ p6a.sayName();//Debbie
 /* the method can be hijacked */
 name = "Tanya";
 p6a.sayName.call(window);//Tanya
+
+/* 
+ * Parasitic Prototype Pattern
+ *
+ * This is a fall back when other patterns fail. 
+ * It wraps the creation and return of an object while looking like a regular constructor.
+ * This is exactly the same as the Factory Pattern except that the function is called
+ * as a constructor, using the new operator.
+ */
+ 
+ function Person7(name, age){
+   var o = new Object();
+   o.name = name;
+   o.age = age
+   o.sayName = function() {
+     console.log(this.name);
+   }
+   return o;
+ }
+ 
+ var p7 = new Person7('Bob', 44);
+ p7.sayName(); //Bob
