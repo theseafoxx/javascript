@@ -204,7 +204,7 @@ name = "Tanya";
 p6a.sayName.call(window);//Tanya
 
 /* 
- * Parasitic Prototype Pattern
+ * Parasitic Constructor Pattern
  *
  * This is a fall back when other patterns fail. 
  * It wraps the creation and return of an object while looking like a regular constructor.
@@ -224,3 +224,28 @@ p6a.sayName.call(window);//Tanya
  
  var p7 = new Person7('Bob', 44);
  p7.sayName(); //Bob
+
+/*
+ * Durable Constructor Pattern
+ *
+ * Creates a durable object, it has no public properties and it does not use [this] object.
+ * This is geared toward secure environments (where [new] and [this] are forbidden) or to
+ * protect data from the rest of the application.
+ */
+ 
+function Person8(name, age) {
+  // create object to return
+  var o = new Object();
+  // define private variables/functions
+  var species = 'Human';
+  // attach methods
+  o.sayName = function(){
+    console.log(name);
+  }
+  // return the object
+  return o;
+}
+ 
+ var p8 = Person8('Guy', 34);
+ p8.sayName();
+ 
