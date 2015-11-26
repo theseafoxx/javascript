@@ -20,10 +20,10 @@ function hideParent(className) {
 
 function getParent(obj, parentTag){
   if(obj.tagName === undefined){ return false;}
-    var temp = obj.parentNode;
-    if( temp.tagName === parentTag){
-      return obj.parentNode;
-    } else {
-      return getParent(temp, parentTag);
-    }
+  var temp = obj.parentNode;
+  if( temp.tagName === parentTag){
+    return obj.parentNode;
+  } else {
+    return getParent(temp, parentTag);
+  }
 }
