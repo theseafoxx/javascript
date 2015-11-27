@@ -141,17 +141,80 @@ instance1.sayAge();
 /*
  * Prototypal Inheritance
  */
-
+ function object(o) {
+  function F() {}
+  F.prototype = o;
+  return new F();
+ }
+ //object function has been fomralize by ECMAScript 5 and is included in the standard as Object.create()
+ var person = {
+   name: "Tom",
+   friends: ["Shawn", "Pete", "Jason"]
+ }
  
-
+ var aPerson = object(person);
+ aPerson.name = 'Greg';
+ aPerson.friends.push('Rob');
+ 
+ var bPerson = object(person);
+ bPerson.name = 'Bob';
+ bPerson.friends.push('Gandolf');
+ alert(person.friends); //"Shawn,Pete,Jason,Rob,Gandolf"
+ 
 /*
  * Parasitic Inheritance
+ * create a function that does the inheritance, augments the object in some way,
+ * and the n returns the object as if it did all the work
  */
+ function createAnother(orig) {
+  var clone = object(orig);
+  clone.sayHi = function() {
+   alert('Hi');
+  };
+  return clone;
+ }
+  
+ var person = {
+   name: "Tom",
+   friends: ["Shawn", "Pete", "Jason"]
+ }
  
+ var aPerson = createAnother(person);
 
 /*
  * Parasitic Combination Inheritance 
+ * constructor stealing to inherit properties
+ * hybrid prototype chaining to copy superType prototype and assign to subType prototype 
+ * to allow inheritance of prototype methods and properties
  */
 
+function inheritPrototype(subType, superType) {
+ var prototype = object(superType.prototype); //this is a function defined eariler in this document
+ //or use the following:
+ //var prototype = Object.create(superType.prototype); //ECMAScript 5
+ 
+ prototype.constructor = subType;
+ subType.prototype = prototype;
+}
+ 
+function SuperType(name) {
+  this.name = name;
+  this.property = true;
+  this.colors = ['red', 'green', 'yellow'];
+}
 
+SuperType.prototype.getSuperValue = function() {
+  console.log(this.property);
+}
+
+function SubType(name) {
+  SuperType.call(this, name);
+  this.subProperty = false; 
+}
+
+inheritPrototype(SubType, SuperType);
+
+SubType.prototype.getSubValue = function() {
+  console.log(this.subProperty);
+}
  
