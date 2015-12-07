@@ -21,7 +21,7 @@ function listProperties(obj) {
   
   console.log(obj.constructor.name + ": " + Object.getOwnPropertyNames(obj));
   // run the function again, supply the next prototype in the chain
-  hasProperties(Object.getPrototypeOf(obj));
+  listProperties(Object.getPrototypeOf(obj));
 }
 /*
  * Factory pattern
